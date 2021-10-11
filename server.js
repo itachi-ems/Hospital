@@ -12,7 +12,7 @@ mongoose.connect(DB,{
     useCreateIndex:true,
     useFindAndModify:false,
     useUnifiedTopology: true
-}).then(con =>{
+}).then(() =>{
     console.log('DB connection successful')
 })
 
