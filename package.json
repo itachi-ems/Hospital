@@ -1,0 +1,26 @@
+{
+  "name": "hospital-management",
+  "version": "1.0.0",
+  "description": "My nodejs Hospital management project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itachi-ems/Hospital.git"
+  },
+  "author": "Harsh Shah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itachi-ems/Hospital/issues"
+  },
+  "homepage": "https://github.com/itachi-ems/Hospital#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.10",
+    "morgan": "^1.10.0"
+  }
+}
