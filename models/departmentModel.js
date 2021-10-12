@@ -6,7 +6,7 @@ const departmentSchema = new mongoose.Schema({
     required: [true, "A Department must have a name."],
     unique: true,
   },
-  floorNumber: {
+  buildingNumber: {
     type: Number,
     required: [true, "A department must have a Floor Number."],
   },
@@ -24,6 +24,6 @@ const departmentSchema = new mongoose.Schema({
   },
 });
 
-const department = mongoose.model("Department", departmentSchema);
+const Department = mongoose.model("Department", departmentSchema);
 
-module.exports = department;
+module.exports = Department;
