@@ -57,7 +57,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.header.authorization.split(' ')[1];
+    token = req.headers.authorization.split(' ')[1];
   }
 
   if (!token) {
@@ -67,7 +67,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   //2)Verification
-  const decoded = await promisify(jwt.verify(token,process.env.JWT_SECRET))
+  const decoded =jwt.verify(token,process.env.JWT_SECRET)
   console.log(decoded)
 
   //3)Check User exists
