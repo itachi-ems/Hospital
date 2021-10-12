@@ -2,6 +2,7 @@ const Department = require("../models/departmentModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require('../utils/appError');
 
+
 //1)Create Department :
 exports.createDepartment = catchAsync(async (req, res, next) => {
   const newDepartment = await Department.create(req.body);

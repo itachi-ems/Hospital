@@ -1,3 +1,4 @@
+const {promisify} = require('util');
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
@@ -13,7 +14,7 @@ const signToken = (id) => {
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
 
-  const token = signToken(newUser._id)
+  const token = signToken(newUser._id);
 
   res.status(201).json({
     status: "success",
@@ -32,7 +33,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   //2)Check is user exists and password is correct
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect EMAIL or PASSWORD   "));
@@ -47,4 +48,31 @@ exports.login = catchAsync(async (req, res, next) => {
       token,
     },
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  //1)Get JWT Token
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer").split(" ")[1]
+  ) {
+    const token = req.header.authorization;
+  }
+  console.log(token);
+
+  if (!token) {
+    return next(
+      new AppError("You are not logged in. Please LOGIN to get access", 401)
+    );
+  }
+
+  //2)Verification
+  const decoded = await promisify(jwt.verify(token,process.env.JWT_SECRET))
+  console.log(decoded)
+
+  //3)Check User exists
+
+  //4)Check User changed password after jwt issued
+  next();
 });

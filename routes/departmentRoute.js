@@ -1,10 +1,12 @@
 const express = require("express");
 const departmentController = require("../controller/departmentController");
+const authController=require('../controller/authController');
+
 const router = express.Router();
 
 router
   .route("/")
-  .get(departmentController.getAllDepartments)
+  .get(authController.protect,departmentController.getAllDepartments)
   .post(departmentController.createDepartment);
 
 router
