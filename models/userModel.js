@@ -14,9 +14,14 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
+  role:{
+    type:String,
+    enum:['Patient','Doctor','Admin'],
+    default:'Patient'
+  },
   password: {
     type: String,
-    required: [true, "Auser must have a password"],
+    required: [true, "A user must have a password"],
     minlength: 8,
     //Never show in output
     select: false,
@@ -30,6 +35,7 @@ const userSchema = new mongoose.Schema({
     },
     message: "Passwords do not match",
   },
+  passwordChangedAt:Date
 });
 
 userSchema.pre("save", async function (next) {
@@ -50,6 +56,15 @@ userSchema.methods.correctPassword = async function (
 ) {
     return await bcrypt.compare(candidatePassword,userPassword);
 };
+
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp){
+  if(this.passwordChangedAt){
+    const changedTimestamp=parseInt(this.passwordChangedAt.getTime() /1000,10)
+    console.log(changedTimestamp,JWTTimestamp)
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+}
 
 const User = mongoose.model("User", userSchema);
 

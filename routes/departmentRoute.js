@@ -13,6 +13,6 @@ router
   .route("/:id")
   .get(departmentController.getDepartmentById)
   .patch(departmentController.updateDepartmentById)
-  .delete(departmentController.deleteDepartmentById);
+  .delete(authController.protect,authController.restrictTo('Admin'),departmentController.deleteDepartmentById);
 
 module.exports = router;
