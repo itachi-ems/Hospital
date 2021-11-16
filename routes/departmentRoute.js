@@ -11,7 +11,7 @@ router
 
 router
   .route("/:id")
-  .get(departmentController.getDepartmentById)
+  .get(authController.protect,departmentController.getDepartmentById)
   .patch(departmentController.updateDepartmentById)
   .delete(authController.protect,authController.restrictTo('Admin'),departmentController.deleteDepartmentById);
 
